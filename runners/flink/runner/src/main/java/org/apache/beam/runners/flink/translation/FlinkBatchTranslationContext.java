@@ -83,12 +83,16 @@ public class FlinkBatchTranslationContext {
 
   @SuppressWarnings("unchecked")
   public <T> DataSet<WindowedValue<T>> getInputDataSet(PValue value) {
+    System.out.println("FlinkBatchTranslationContext.getInputDataSet");
+    System.out.println("value = [" + value + "]");
     // assume that the DataSet is used as an input if retrieved here
     danglingDataSets.remove(value);
     return (DataSet<WindowedValue<T>>) dataSets.get(value);
   }
 
   public <T> void setOutputDataSet(PValue value, DataSet<WindowedValue<T>> set) {
+    System.out.println("FlinkBatchTranslationContext.setOutputDataSet");
+    System.out.println("value = [" + value + "], set = [" + set + "]");
     if (!dataSets.containsKey(value)) {
       dataSets.put(value, set);
       danglingDataSets.put(value, set);

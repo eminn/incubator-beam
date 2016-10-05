@@ -112,16 +112,15 @@ public class WordCount {
 
   public static void main(String[] args) {
 
-    Options options = PipelineOptionsFactory.fromArgs(args).withValidation()
-        .as(Options.class);
+    Options options = PipelineOptionsFactory.fromArgs(args).as(Options.class);
     options.setRunner(FlinkRunner.class);
 
     Pipeline p = Pipeline.create(options);
 
-    p.apply("ReadLines", TextIO.Read.from(options.getInput()))
+    p.apply("ReadLines", TextIO.Read.from("/Users/emindemirci/Desktop/SPARK"))
         .apply(new CountWords())
         .apply(MapElements.via(new FormatAsTextFn()))
-        .apply("WriteCounts", TextIO.Write.to(options.getOutput()));
+        .apply("WriteCounts", TextIO.Write.to("output"));
 
     p.run();
   }
